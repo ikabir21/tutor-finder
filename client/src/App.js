@@ -3,17 +3,21 @@ import React from "react";
 // MUI Imports
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 
 // Project Imports
 import theme from "./assets/theme";
-import { Button, Typography } from "@mui/material";
+import Home from "./pages/Home";
 
 const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Typography variant="h6">Loading...</Typography>
-			<Button color="primary" variant="contained">Hello</Button>
+			<Router>
+				<Routes>
+					<Route path="/" element={<Home />}></Route>
+				</Routes>
+			</Router>
 		</ThemeProvider>
 	);
 };
