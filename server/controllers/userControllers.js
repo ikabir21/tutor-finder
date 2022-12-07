@@ -1,12 +1,13 @@
 import { SIGNIN, SIGNUP } from "../config/constants.js";
 import validate from "../validators/validate.js";
 import User from "../models/userModel.js";
+import Subject from "../models/subjectModel.js";
 import ErrorMessage from "../utils/errorMessage.js";
 import { generateToken } from "../utils/jwt.js";
 
 export const register = async (req, res, next) => {
-	// const { error } = validate(req.body, SIGNUP);
-	// if (error) return next(new ErrorMessage(error.details[0].message, 400));
+	const { error } = validate(req.body, SIGNUP);
+	if (error) return next(new ErrorMessage(error.details[0].message, 400));
 
 	const { name, email, password } = req.body;
 
@@ -68,7 +69,23 @@ export const updateProfile = (req, res, next) => {
 		state,
 		schoolName, 
 		className, 
-		coursesTaken=[], 
+		coursesTaken = [], 
 		subjectsTaught = []
 	} = req.body;
+};
+
+
+export const addSubject = (req, res, next) => {
+	const {subjectName, price, startTime, endTime} = req.body;
+	console.log(req.body);
+	Subject.create({subjectName, price, startTime, endTime})
+		.then((obj) => {
+			if (obj)
+				return res.status(200).json({
+					success: true,
+					message: "Successfully entered subject!",
+					_id: obj._id
+				});
+		})
+		.catch((err) => next(err));
 };
