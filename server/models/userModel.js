@@ -1,19 +1,47 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import gravatar from "gravatar";
 
 const SALT_WORK_FACTOR = 12;
 
 const userSchema = mongoose.Schema(
 	{
-		name: { type: String, default: "" },
+		name: { type: String},
 		email: { type: String, unique: true },
-		mobile: { type: String },
-		isEmailVerified: { type: Boolean, default: false },
-		password: { type: String, default: "" },
-		shiftCount: { type: Number, default: 2 },
+		password: { type: String },
+		accountType: {type: String, default: ""},
+		address: {type: String, default: ""},
+		city: {type: String, default: ""},
+		pin: {type: String, default: ""},
+		state: {type: String, default: ""},
+		profilePic: {type: String, default: ""},
+		isProfileComplete: {type: Boolean, default: false},
+		schoolName: {type: String, default: ""},
+		className: {type: String, default: ""},
+		coursesTaken: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Subject"
+			}
+		],
+		subjectsTaught: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Subject"
+			}
+		]
 	},
 	{ timestamps: true }
 );
+
+userSchema.pre("save", function(next) {
+	this.profilePic = gravatar.url(
+		this.email,
+		{ s: "100", r: "x", d: "retro" },
+		true
+	);
+	next();
+});
 
 userSchema.pre("save", function (next) {
 	if (this.isModified("password")) {

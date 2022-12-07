@@ -5,14 +5,15 @@ import ErrorMessage from "../utils/errorMessage.js";
 import { generateToken } from "../utils/jwt.js";
 
 export const register = async (req, res, next) => {
-	const { error } = validate(req.body, SIGNUP);
-	if (error) return next(new ErrorMessage(error.details[0].message, 400));
+	// const { error } = validate(req.body, SIGNUP);
+	// if (error) return next(new ErrorMessage(error.details[0].message, 400));
 
 	const { name, email, password } = req.body;
+
 	User.findOne({ email })
 		.then((user) => {
 			if (user) return next(new ErrorMessage("Already Registered", 401));
-
+			console.log("object");
 			User.create({ name, email, password })
 				.then((user) => {
 					if (user)
@@ -53,4 +54,21 @@ export const login = (req, res, next) => {
 			});
 		})
 		.catch((err) => next(err));
+};
+
+export const updateProfile = (req, res, next) => {
+	const {
+		name, 
+		email, 
+		password, 
+		accountType, 
+		address, 
+		city, 
+		pin, 
+		state,
+		schoolName, 
+		className, 
+		coursesTaken=[], 
+		subjectsTaught = []
+	} = req.body;
 };

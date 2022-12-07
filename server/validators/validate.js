@@ -4,7 +4,6 @@ import { SIGNIN, SIGNUP } from "../config/constants.js";
 const validateUser = (user, authType) => {
 	switch (authType) {
 	case SIGNUP:
-		console.log(SIGNUP);
 		return Joi.object({
 			name: Joi.string().required().min(3).max(20).label("Name"),
 
