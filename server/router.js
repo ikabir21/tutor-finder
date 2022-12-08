@@ -1,4 +1,5 @@
 import express from "express";
+import { addRating, getRatiing } from "./controllers/ratingControllers.js";
 
 // project imports
 import { addSubject, changePassword, getProfile, login, register, updateProfile } from "./controllers/userControllers.js";
@@ -17,5 +18,9 @@ router.post("/user/profile", isAuth, updateProfile);
 
 router.post("/add-subject", isAuth, addSubject);
 router.post("/change-password", isAuth, changePassword);
+
+// Rating rooutes
+router.post("/add-rating", isAuth, addRating);
+router.get("/get-rating/:subjectId", isAuth, getRatiing);
 
 export default router;

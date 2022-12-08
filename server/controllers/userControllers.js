@@ -4,7 +4,6 @@ import User from "../models/userModel.js";
 import Subject from "../models/subjectModel.js";
 import ErrorMessage from "../utils/errorMessage.js";
 import { generateToken } from "../utils/jwt.js";
-import { mongoose } from "mongoose";
 
 export const register = async (req, res, next) => {
 	const { error } = validate(req.body, SIGNUP);
