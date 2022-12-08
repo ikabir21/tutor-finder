@@ -84,11 +84,14 @@ const theme = createTheme({
 		color: "#222831",
 		h1: {
 			fontSize: "4.75rem",
-			fontFamily: ["Lobster", "cursive"].join(","),
+			fontFamily: ["Roboto", "cursive"].join(","),
+			fontWeight:"600"
 		},
 		h2: {
-			fontSize: "3.75rem",
-			fontFamily: ["Lobster", "cursive"].join(","),
+			fontSize: "4rem",
+			fontFamily: ["Roboto", "cursive"].join(","),
+			fontWeight:"600"
+			
 		},
 		h3: {
 			fontSize: "2.25rem",
@@ -102,12 +105,12 @@ const theme = createTheme({
 		},
 		h5: {
 			fontSize: "1.75rem",
-			fontFamily: ["Montserrat", "Open Sans"].join(","),
+			fontFamily: ["Roboto", "Open Sans"].join(","),
 			fontWeight: 500
 		},
 		h6: {
 			fontSize: "1.2rem",
-			fontFamily: ["Montserrat", "Open Sans"].join(","),
+			fontFamily: ["Roboto", "Open Sans"].join(","),
 			fontWeight: 400
 		},
 		button: {
@@ -121,9 +124,9 @@ const theme = createTheme({
 	palette: {
 		mode: "dark",
 		primary: {
-			light: "#006974",
-			main: "#0097a7",
-			dark: "#33abb8",
+			light: "#b27000",
+			main: "#ffa000",
+			dark: "#ffb333",
 			contrastText: "rgba(0, 0, 0, 0.87)"
 		},
 		secondary: {
@@ -179,8 +182,8 @@ const theme = createTheme({
 			secondary: "#393E46"
 		},
 		background: {
-			paper: "#00ADB5",
-			default: "#95E1D3"
+			paper: "#E5B323",
+			default: "#eee"
 		},
 		action: {
 			disabledOpacity: 0.38,

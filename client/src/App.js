@@ -9,12 +9,14 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import theme from "./assets/theme";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import Navbar from "./components/Navbar";
 
 const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Router>
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
 					<Route path="/auth" element={<Auth />}></Route>
