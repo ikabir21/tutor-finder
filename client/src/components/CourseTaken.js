@@ -13,9 +13,6 @@ export default function BasicCard() {
         <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
           Chemistry
         </Typography>
-        <Typography variant='h5' component='div'>
-          4.5/5
-        </Typography>
 
         <Typography variant='body2'>Joined on: 12/2/22</Typography>
       </CardContent>

@@ -1,32 +1,38 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+import { Card, CardContent, Typography, Stack, Chip } from '@mui/material';
+import StarIcon from '@mui/icons-material/StarOutline';
 
-import CardContent from '@mui/material/CardContent';
-
-import Typography from '@mui/material/Typography';
-
-const bull = (
-  <Box
-    component='span'
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+const coursesClass = ['X', 'XI', 'XII'];
 
 export default function BasicCard() {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-          Chemistry
-        </Typography>
-        <Typography variant='h5' component='div'>
-          4.5/5
-        </Typography>
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Typography variant='h6' component='h6' color='text.secondary'>
+            Chemistry
+          </Typography>
+          <Typography variant='body1' component='p'>
+            <StarIcon /> 4.5/5
+          </Typography>
+        </Stack>
 
-        <Typography variant='body2'>9000</Typography>
+        <Stack direction='row' justifyContent='left'>
+          <Typography variant='body1' component='p'>
+            classes{' '}
+            {coursesClass.map((classes, idx) => {
+              return <Chip key={idx} label={classes} variant='outlined' />;
+            })}
+          </Typography>
+        </Stack>
+
+        <Typography variant='h6' component='p'>
+          ₹ 9000 / Month
+        </Typography>
       </CardContent>
     </Card>
   );

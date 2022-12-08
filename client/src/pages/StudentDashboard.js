@@ -7,7 +7,8 @@ import {
   Box,
   Avatar,
   TextField,
-  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import CContainer from '../components/CContainer';
 import CourseTaken from '../components/CourseTaken';
@@ -27,9 +28,46 @@ const StudentDashboard = () => {
             Student Details
           </Typography>
           <Stack direction='column' justifyContent='space-evenly' spacing={3}>
-            <TextField required label='Required' defaultValue='Name' />
-            <TextField defaultValue='Gender' />
-            <TextField defaultValue='Address' rows={3} multiline />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography component='h6' variant='h6' mr={4}>
+                Gender
+              </Typography>
+              <Select
+                variant='outlined'
+                fullWidth
+                name='relationshipStatusData'
+                i
+              >
+                <MenuItem value={0}>Male</MenuItem>
+                <MenuItem value={1}>Female</MenuItem>
+              </Select>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography component='h6' variant='h6' mr={4}>
+                Address
+              </Typography>
+              <TextField
+                defaultValue='Address'
+                rows={2}
+                multiline
+                variant='outlined'
+                fullWidth
+              />
+            </div>
+            <Stack direction='row' justifyContent='space-between'>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography component='h6' variant='h6' mr={4}>
+                  Pin
+                </Typography>
+                <TextField defaultValue='Pin' variant='outlined' />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography component='h6' variant='h6' mr={4}>
+                  State
+                </Typography>
+                <TextField defaultValue='State' variant='outlined' />
+              </div>
+            </Stack>
             <Button variant='contained'>Save Details</Button>
           </Stack>
         </Box>
@@ -58,7 +96,7 @@ const StudentDashboard = () => {
       </Stack>
 
       <Box m={4} component='div'>
-        <Typography variant='h5' component='h3'>
+        <Typography variant='h5' component='h4' gutterBottom>
           Courses Taken
         </Typography>
         <div

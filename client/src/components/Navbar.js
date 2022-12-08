@@ -1,50 +1,53 @@
 import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import React, { useState } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
+	AppBar,
+	Box,
+	Button,
+	IconButton,
+	Toolbar,
+	Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
-  const [login, setLogin] = useState(false);
-  const navItems = ['Home', 'Explore', 'Login'];
+	const [login, setLogin] = useState(false);
+	const navItems = ["Home", "Explore", "Login"];
 
-  return (
-    <AppBar component='nav'>
-      <Toolbar>
-        <IconButton
-          color='inherit'
-          aria-label='open drawer'
-          edge='start'
-          sx={{ mr: 2, display: { sm: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant='h6'
-          component='div'
-          sx={{
-            flexGrow: 1,
-            display: { xs: 'none', sm: 'block' },
-            color: '#fff',
-          }}
-        >
+	return (
+		<AppBar component='nav'>
+			<Toolbar>
+				<IconButton
+					color='inherit'
+					aria-label='open drawer'
+					edge='start'
+					sx={{ mr: 2, display: { sm: "none" } }}
+				>
+					<MenuIcon />
+				</IconButton>
+				<Typography
+					variant='h6'
+					component={Link}
+					to="/"
+					sx={{
+						flexGrow: 1,
+						display: { xs: "none", sm: "block" },
+						color: "#fff",
+						textDecoration: "none"
+					}}
+				>
           Tutor Finder
-        </Typography>
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-          {navItems.map((item) => (
-            <Button key={item} sx={{ color: '#fff' }}>
-              {item}
-            </Button>
-          ))}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
+				</Typography>
+				<Box sx={{ display: { xs: "none", sm: "block" } }}>
+					{navItems.map((item) => (
+						<Button key={item} sx={{ color: "#fff" }}>
+							{item}
+						</Button>
+					))}
+				</Box>
+			</Toolbar>
+		</AppBar>
+	);
 };
 
 export default Navbar;
