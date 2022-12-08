@@ -14,6 +14,7 @@ import Navbar from './components/Navbar';
 import TutorProfile from './pages/TutorProfile';
 import Search from './pages/Search';
 import TeacherDashboard from './pages/TeacherDashboard';
+import StudentDashboard from './pages/StudentDashboard';
 
 const App = () => {
   return (
@@ -26,7 +27,8 @@ const App = () => {
           <Route path='/auth' element={<Auth />}></Route>
           <Route path='/tutor' element={<TutorProfile />}></Route>
           <Route path='/search' element={<Search />}></Route>
-          <Route path='/Dashboard' element={<TeacherDashboard />}></Route>
+          <Route path='/dashboard' element={<TeacherDashboard />}></Route>
+          <Route path='/your-dashboard' element={<StudentDashboard />}></Route>
         </Routes>
       </Router>
     </ThemeProvider>
