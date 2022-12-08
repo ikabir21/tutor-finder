@@ -124,6 +124,7 @@ const TeacherDashboard = () => {
                 p: 2,
                 border: '1px solid black ',
                 borderRadius: '15px',
+                bgcolor: 'grey',
               }}
             >
               <Typography gutterBottom variant='body1' component='h6'>
