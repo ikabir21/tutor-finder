@@ -15,14 +15,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Auth() {
 	const { state, actions } = React.useContext(AppContext);
-	// console.log(state);
-	// if (state.isAuth) {
-	// 	if (state.isCompleteProfile) {
-			
-	// 	}
-	// 	history.push("");
-	// }
-
 	const [isSignup,setIsSignup]=useState(false);
 	const [values,setValues]=useState({
 		name:"",email:"",password:"",showPassword:true

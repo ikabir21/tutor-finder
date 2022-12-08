@@ -4,7 +4,6 @@ import {
 	LOGOUT,
 	REGISTER,
 	SET_PROFILE,
-	SET_PAYMENTS,
 	UPLOAD_FILE,
 	ADD_PROJECTS,
 	DELETE_PROJECTS,
@@ -40,7 +39,7 @@ const getActions = (dispatch) => {
 							? error.response?.data?.message
 							: error.message;
 				Swal.fire({
-					position: "top-end",
+					position: "center",
 					icon: "error",
 					title: `${msg}`,
 					showConfirmButton: false,
@@ -82,6 +81,13 @@ const getActions = (dispatch) => {
 		},
 		logout: () => {
 			dispatch({ type: LOGOUT });
+			Swal.fire({
+				position: "center",
+				icon: "success",
+				title: "Logged out succesfully!",
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		},
 		getProfile: async () => {
 			dispatch({ type: LOADING });
@@ -99,23 +105,6 @@ const getActions = (dispatch) => {
 
 				// alert(msg);
 				window.location.href = "/#/login";
-			}
-		},
-		getPayments: async () => {
-			dispatch({ type: LOADING });
-			try {
-				const { data } = await Axios.get("/payments");
-				console.log(data);
-				dispatch({ type: SET_PAYMENTS, payload: data });
-			} catch (error) {
-				const msg =
-					error.response.status === 401
-						? "Access Denied"
-						: error.response && error.response?.data?.message
-							? error.response?.data?.message
-							: error.message;
-
-				alert(msg);
 			}
 		},
 		uploadResults: async (formData) => {
