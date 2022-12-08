@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 
 const CContainer = ({ children, ...rest }) => (
 	<Box
-		maxWidth={{ sm: 720, md: 1236 }}
+		maxWidth={{ sm: 720, md: 1920 }}
 		width={"100%"}
 		margin={"0 auto"}
 		paddingX={2}

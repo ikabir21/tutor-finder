@@ -2,6 +2,7 @@ import React,{useState} from "react";
 
 import CContainer from "../components/CContainer";
 import Image from "../assets/images/Pattern.png";
+import { AppContext } from "../context";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,6 +14,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Auth() {
+	const { state, actions } = React.useContext(AppContext);
+
 	const [isSignup,setIsSignup]=useState(false);
 	const [values,setValues]=useState({
 		name:"",email:"",password:"",showPassword:true
@@ -26,13 +29,11 @@ export default function Auth() {
 		setValues({...values,showPassword:!values.showPassword});
 	}
 	function onSubmit(e) {
-		console.log(values);
+		!isSignup ? actions.login({email: values.email, password: values.password}) : actions.register({name: values.name, email: values.email, password: values.password});
 		setValues({name:"",email:"",password:"",showPassword:false});
 		e.preventDefault();
 	}
 	
-
-
 	return (
 		<div style={{backgroundImage:`url(${Image})`, height:"100vh",display:"grid",alignItems:"center",backgroundSize:"cover"}}>
 			{isSignup&&(<form action="">
