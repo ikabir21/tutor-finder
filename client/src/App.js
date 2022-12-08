@@ -10,6 +10,8 @@ import theme from "./assets/theme";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Navbar from "./components/Navbar";
+import TutorProfile from "./pages/TutorProfile";
+import Search from "./pages/Search";
 
 const App = () => {
 	return (
@@ -20,10 +22,11 @@ const App = () => {
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
 					<Route path="/auth" element={<Auth />}></Route>
+					<Route path='/tutor' element={<TutorProfile />}></Route>
+					<Route path='/search' element={<Search />}></Route>
 				</Routes>
 			</Router>
 		</ThemeProvider>
 	);
 };
-
 export default App;
