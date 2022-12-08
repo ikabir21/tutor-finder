@@ -29,7 +29,6 @@ const App = () => {
 	const {isAuth, isProfileComplete} = state;
 	const pathname = (window.location.pathname !== "/teacher-dashboard") && (window.location.pathname !== "/student-dashboard");
 
-
 	useEffect(() => {
 		console.log(isAuth, isProfileComplete);
 		setTimeout(() => {
