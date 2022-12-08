@@ -20,7 +20,7 @@ const tutorData = {
   ],
 };
 
-const Home = () => {
+const TutorProfile = () => {
   return (
     <CContainer>
       <Box mt={5}>
@@ -128,4 +128,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default TutorProfile;
