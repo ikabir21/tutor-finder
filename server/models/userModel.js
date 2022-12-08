@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema(
 		password: { type: String },
 		accountType: {type: String, enum: ["STUDENT", "TEACHER", "ADMIN"], default: "STUDENT"},
 		address: {type: String, default: ""},
+		designation: {type: String, default: ""},
 		city: {type: String, default: ""},
 		pin: {type: String, default: ""},
 		state: {type: String, default: ""},
