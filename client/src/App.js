@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import TutorProfile from './pages/TutorProfile';
 import Search from './pages/Search';
+import TeacherDashboard from './pages/TeacherDashboard';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path='/' element={<Home />}></Route>
           <Route path='/tutor' element={<TutorProfile />}></Route>
           <Route path='/search' element={<Search />}></Route>
+          <Route path='/Dashboard' element={<TeacherDashboard />}></Route>
         </Routes>
       </Router>
     </ThemeProvider>
