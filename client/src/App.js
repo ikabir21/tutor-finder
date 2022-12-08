@@ -3,7 +3,13 @@ import React, { useContext, useEffect } from "react";
 // MUI Imports
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Link,
+	useNavigate,
+} from "react-router-dom";
 
 // Project Imports
 
@@ -14,6 +20,7 @@ import Navbar from "./components/Navbar";
 import TutorProfile from "./pages/TutorProfile";
 import Search from "./pages/Search";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
 import { AppContext } from "./context";
 import Swal from "sweetalert2";
 
@@ -71,7 +78,14 @@ const App = () => {
 					<Route path='/auth' element={<Auth />}></Route>
 					<Route path='/tutor' element={<TutorProfile />}></Route>
 					<Route path='/search' element={<Search />}></Route>
-					<Route path='/teacher-dashboard' element={<TeacherDashboard />}></Route>
+					<Route
+						path='/teacher-dashboard'
+						element={<TeacherDashboard />}
+					></Route>
+					<Route
+						path='/student-dashboard'
+						element={<StudentDashboard />}
+					></Route>
 				</Routes>
 			</Router>
 		</ThemeProvider>
