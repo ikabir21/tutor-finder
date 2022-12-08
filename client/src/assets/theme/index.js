@@ -124,9 +124,9 @@ const theme = createTheme({
 	palette: {
 		mode: "dark",
 		primary: {
-			light: "#b27000",
-			main: "#ffa000",
-			dark: "#ffb333",
+			light: "#d9688d",
+			main: "#FD2D71",
+			dark: "#bf426b",
 			contrastText: "rgba(0, 0, 0, 0.87)"
 		},
 		secondary: {
@@ -182,7 +182,7 @@ const theme = createTheme({
 			secondary: "#393E46"
 		},
 		background: {
-			paper: "#E5B323",
+			paper: "#FD2D71",
 			default: "#eee"
 		},
 		action: {

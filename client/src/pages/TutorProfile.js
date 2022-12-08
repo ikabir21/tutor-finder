@@ -23,7 +23,7 @@ const tutorData = {
 const TutorProfile = () => {
 	return (
 		<CContainer>
-			<Box mt={5}>
+			<Box m={5}>
 				<Grid container spacing={2}>
 					<Grid xs={4}>
 						<img src={tutorData.image} />
