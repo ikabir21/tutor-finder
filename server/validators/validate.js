@@ -1,5 +1,5 @@
 import Joi from "@hapi/joi";
-import { SIGNIN, SIGNUP } from "../config/constants.js";
+import { RATING, SIGNIN, SIGNUP } from "../config/constants.js";
 
 const validateUser = (user, authType) => {
 	switch (authType) {
@@ -16,7 +16,17 @@ const validateUser = (user, authType) => {
 			email: Joi.string().email().required().min(5),
 			password: Joi.string().required().min(6).label("Password"),
 		}).validate(user);
-
+	case RATING:
+		return Joi.object({
+			value: Joi.number()
+				.min(0)
+				.max(5)
+				.required()
+				.messages({
+					"number.min": "Rating must be at least 0",
+					"number.max": "Rating must be at most 5"
+				})
+		}).validate(user);
 	default:
 		break;
 	}
