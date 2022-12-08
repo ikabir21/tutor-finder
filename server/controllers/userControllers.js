@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 import Subject from "../models/subjectModel.js";
 import ErrorMessage from "../utils/errorMessage.js";
 import { generateToken } from "../utils/jwt.js";
+import { mongoose } from "mongoose";
 
 export const register = async (req, res, next) => {
 	const { error } = validate(req.body, SIGNUP);
@@ -24,7 +25,7 @@ export const register = async (req, res, next) => {
 							_id: user._id,
 							email: user.email,
 							name: user.name,
-							token: generateToken({ _id: user._id, email }),
+							token: generateToken({ userId: user._id, email }),
 						});
 				})
 				.catch((err) => next(err));
@@ -40,6 +41,7 @@ export const login = (req, res, next) => {
 	User.findOne({ email })
 		.then((user) => {
 			console.log(user);
+			if (!user) return next(new ErrorMessage("User not found", 400));
 			user.comparePassword(password, (err, isMatched) => {
 				if (err) return next(err);
 				if (!isMatched)
@@ -50,7 +52,7 @@ export const login = (req, res, next) => {
 					_id: user._id,
 					email: user.email,
 					name: user.name,
-					token: generateToken({ _id: user._id, email }),
+					token: generateToken({ userId: user._id, email }),
 				});
 			});
 		})
@@ -60,8 +62,6 @@ export const login = (req, res, next) => {
 export const updateProfile = (req, res, next) => {
 	const {
 		name, 
-		email, 
-		password, 
 		accountType, 
 		address, 
 		city, 
@@ -72,13 +72,44 @@ export const updateProfile = (req, res, next) => {
 		coursesTaken = [], 
 		subjectsTaught = []
 	} = req.body;
+	const email = req.user.email;
+	const userId = req.user.userId;
+	if (!userId) next(new ErrorMessage("Access denied", 401));
+	User.findOne({email})
+		.then((user) => {
+			if (!user) return next(new ErrorMessage("User not registered", 400));
+			User.updateOne({email}, {
+				name,
+				accountType,
+				address,
+				city,
+				pin,
+				state,
+				schoolName,
+				className,
+				coursesTaken,
+				subjectsTaught
+			}, {new: true})
+				.then(async (obj) => {
+					if (checkCompleteProfile({name, email, address, city, pin, state, schoolName, className, accountType})) {
+						await User.updateOne({email}, {isProfileComplete: true});
+					}
+					console.log(obj);
+					res.status(200).json({
+						success: true,
+						message: "Successfully updated profile",
+						_id: obj._id
+					});
+				});
+		});
 };
 
 
 export const addSubject = (req, res, next) => {
 	const {subjectName, price, startTime, endTime} = req.body;
+	const userId = req.user.userId;
 	console.log(req.body);
-	Subject.create({subjectName, price, startTime, endTime})
+	Subject.create({subjectName, price, startTime, endTime, ownerId: userId})
 		.then((obj) => {
 			if (obj)
 				return res.status(200).json({
@@ -88,4 +119,47 @@ export const addSubject = (req, res, next) => {
 				});
 		})
 		.catch((err) => next(err));
+};
+
+
+export const changePassword = async (req, res, next) => {
+	const {oldPassword, newPassword} = req.body;
+	console.log(req.user);
+	const userId = req.user.userId;
+	// const userId = "639036c8935b81caaece8ba1";
+	const user = await User.findById(userId);
+	if (!user) return next(new ErrorMessage("User not found", 400));
+	user.comparePassword(oldPassword, async (err, isMatched) => {
+		if (err) return next(err);
+		if (!isMatched)
+			return next(new ErrorMessage("Invalid Credntials", 401));
+		user.password = newPassword;
+		user.save((err, doc) => {
+			if (err) return next(err);
+			return res.status(200).json({ success: true, message: "Password changed successfully!" });
+		});
+	});
+};
+
+export const getProfile = (req, res, next) => {
+	const userId = req.user.userId;
+	if (!userId) next(new ErrorMessage("Access denied", 401));
+	User.findById(userId).select("-password")
+		.then((user) => {
+			if (!user) return next(new ErrorMessage("User not found", 400));
+			return res.status(200).json({success: true, user});
+		});
+};
+
+
+const checkCompleteProfile = ({name, email, address, city, pin, state, schoolName, className, accountType}) => {
+	// console.log({name, email, address, city, pin, state, schoolName, className, accountType});
+	const a = name && email && address && city && pin && state;
+	if (accountType === "TEACHER") {
+		return a;
+	}
+	if (accountType === "STUDENT") {
+		return a && schoolName && className;
+	}
+	return false;
 };
