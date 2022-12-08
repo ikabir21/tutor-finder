@@ -52,7 +52,7 @@ const TeacherDashboard = () => {
         </Stack>
       </Stack>
 
-      <Box mt={3} component='div'>
+      <Box m={3} component='div'>
         <Typography variant='h5' component='h3'>
           Courses
         </Typography>
