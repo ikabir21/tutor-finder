@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 import CContainer from "../components/CContainer";
-import Image from "../assets/images/Image_home.png";
+import Image from "../assets/images/modified.png";
 
 const Home = () => {
 	return (
