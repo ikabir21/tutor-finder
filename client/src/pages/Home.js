@@ -1,5 +1,5 @@
-import React from "react";
 import {Link} from "react-router-dom";
+import React, { useContext } from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,8 +9,11 @@ import Grid from "@mui/material/Grid";
 
 import CContainer from "../components/CContainer";
 import Image from "../assets/images/modified.png";
+import { AppContext } from "../context";
 
 const Home = () => {
+	const {state, actions} = useContext(AppContext);
+	console.log(state);
 	return (
 		<CContainer>
 			<Grid container justifyContent="center" alignItems="center" spacing={2} sx={{mt:2}}>
@@ -28,7 +31,6 @@ from the comfort of your home. Or verify yourself and become tutors and find stu
 					<Box component="img" sx={{width:"100%"}} src={Image}>
 					</Box>
 				</Grid>
-				<Grid item xs={4}></Grid>
 			</Grid>
 		</CContainer>
 	);
