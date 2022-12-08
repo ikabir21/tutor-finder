@@ -16,11 +16,10 @@ const Home = () => {
 				<Grid item xs={6}>
 					<Box>
 						<Typography variant="h2" >Get a perfect <span style={{color:"#E5B323"}}>Tutor</span></Typography>
-						<Typography variant="h6" sx={{mt:2}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-sed do iusmod tempor incididunt ut labore et dolore ma
-gna aliqua. Ut enim ad minim veniam. </Typography>
-						<Typography variant="h6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-sed </Typography>
+						<Typography variant="h6" sx={{mt:2}}>Say no to wandering in your city for tutors.
+Join TUTOR FINDER to enroll for tution classes of verified tutors 
+from the comfort of your home.</Typography>
+						<Typography variant="h6">Or verify yourself and become tutors and find students.</Typography>
 						<Button sx={{mt:2}} size="large" variant="contained">Get Started</Button>
 					</Box>
 				</Grid>
