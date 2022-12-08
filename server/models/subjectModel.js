@@ -6,6 +6,7 @@ const subjectSchema = mongoose.Schema(
 		price: {type: Number},
 		startTime: {type: String},
 		endTime: {type: String},
+		ownerId: {type: mongoose.Schema.ObjectId, ref: "User"},
 		rating : [
 			{
 				value: {type: Number},
