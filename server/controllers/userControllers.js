@@ -45,12 +45,12 @@ export const login = (req, res, next) => {
 				if (err) return next(err);
 				if (!isMatched)
 					return next(new ErrorMessage("Invalid Credntials", 401));
+				delete user["passoword"];
 				res.status(200).json({
 					success: true,
 					message: "Successfully logged in",
 					_id: user._id,
-					email: user.email,
-					name: user.name,
+					user,
 					token: generateToken({ userId: user._id, email }),
 				});
 			});

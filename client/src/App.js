@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 // MUI Imports
 import { ThemeProvider } from "@mui/material/styles";
@@ -21,38 +21,45 @@ const App = () => {
 	const {state, actions} = useContext(AppContext);
 	const {isAuth, isProfileComplete} = state;
 	const pathname = (window.location.pathname !== "/teacher-dashboard") && (window.location.pathname !== "/student-dashboard");
-	if (isAuth) {
-		if (!isProfileComplete && pathname) {
-			Swal.fire({
-				title: "Select account type",
-				input: "select",
-				inputAttributes: {
-					autocapitalize: "off"
-				},
-				inputOptions: {
-					TEACHER: "Teacher",
-					STUDENT: "Student"
-				},
-				inputPlaceholder: "Select account type",
-				// showCancelButton: true,
-				confirmButtonText: "Complete Profile",
-				showLoaderOnConfirm: true,
-				preConfirm: (accountType) => {
-					return accountType;
-				},
-				allowOutsideClick: () => !Swal.isLoading()
-			}).then((result) => {
-				const accountType = result.value;
-				if (result.isConfirmed) {
-					if (accountType === "TEACHER") {
-						window.location.href = "/teacher-dashboard";
-					} else if (accountType === "STUDENT") {
-						window.location.href = "/student-dashboard";
-					}
+
+
+	useEffect(() => {
+		console.log(isAuth, isProfileComplete);
+		setTimeout(() => {
+			if (isAuth && !isProfileComplete && pathname) completeProfile();
+		}, 1800);
+	}, [isAuth, isProfileComplete, pathname]);
+
+	const completeProfile = () => {
+		Swal.fire({
+			title: "Select account type",
+			input: "select",
+			inputAttributes: {
+				autocapitalize: "off"
+			},
+			inputOptions: {
+				TEACHER: "Teacher",
+				STUDENT: "Student"
+			},
+			inputPlaceholder: "Select account type",
+			// showCancelButton: true,
+			confirmButtonText: "Complete Profile",
+			showLoaderOnConfirm: true,
+			preConfirm: (accountType) => {
+				return accountType;
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			const accountType = result.value;
+			if (result.isConfirmed) {
+				if (accountType === "TEACHER") {
+					window.location.href = "/teacher-dashboard";
+				} else if (accountType === "STUDENT") {
+					window.location.href = "/student-dashboard";
 				}
-			});
-		}
-	}
+			}
+		});
+	};
 
 	return (
 		<ThemeProvider theme={theme}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -8,8 +8,21 @@ import Grid from "@mui/material/Grid";
 import CContainer from "../components/CContainer";
 import Image from "../assets/images/Image_home.png";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context";
+
+const getRoute = (state) => {
+	if (state.isAuth) {
+		if (state.user.accountType === "STUDENT") {
+			return "/search";
+		}
+		return "/teacher-dashboard";
+	}
+	return "/auth";
+};
 
 const Home = () => {
+	const {state, actions} = useContext(AppContext);
+	console.log(state);
 	return (
 		<CContainer>
 			<Grid container justifyContent="center" alignItems="center" spacing={2} sx={{mt:2}}>
@@ -19,7 +32,7 @@ const Home = () => {
 						<Typography variant="h6" sx={{mt:2, textAlign: "justify"}}>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do iusmod tempor incididunt ut labore et dolore ma gna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
 						</Typography>
-						<Button sx={{mt:2}} size="large" variant="contained" component={Link} to="/auth">Get Started</Button>
+						<Button sx={{mt:2}} size="large" variant="contained" component={Link} to={getRoute(state)}Get>Get Started</Button>
 					</Box>
 				</Grid>
 				<Grid item xs={4}>
