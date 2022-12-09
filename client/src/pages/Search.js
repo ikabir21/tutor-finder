@@ -5,6 +5,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Typography, Stack, Button } from "@mui/material";
 import CContainer from "../components/CContainer";
 import TutorCard from "../components/TutorCard";
+
+
 const Search = () => {
 	return (
 		<CContainer>
@@ -14,7 +16,7 @@ const Search = () => {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
-						margin: "60px",
+						margin: "30px",
 					}}
 				>
 					<TextField
@@ -34,16 +36,16 @@ const Search = () => {
             Top Rated Tutors near you
 					</Typography></Grid>
 					<Grid item xs={6} style={{textAlign:"right"}}><Button >See all</Button></Grid>
-					<Grid item xs={3}>
+					<Grid item md={3} sm={4}>
 						<TutorCard/>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item md={3} sm={4}>
 						<TutorCard/>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item md={3} sm={4}>
 						<TutorCard/>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item md={3} sm={4}>
 						<TutorCard/>
 					</Grid>
 				</Grid>
