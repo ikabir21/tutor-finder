@@ -1,26 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Grid, Typography, Box, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/StarBorderPurple500";
 import SchoolIcon from "@mui/icons-material/School";
 import CContainer from "../components/CContainer";
 import StudentReview from "../components/StudentReview";
+import Swal from "sweetalert2";
 
 const tutorData = {
-	name: "Bright Mind classes",
-	image: "https://picsum.photos/400/300",
-	location: "Goyal compound, Lalkuan, Uttarakhand",
-	tutorName: "Reeya den",
-	education: "Bsc from Mysore",
+	name: "Rimi Bobal's classes",
+	image: "https://picsum.photos/id/3/300/200",
+	location: "Guru Teg Bahadur Rd, Ward No. 1, Boro Bazar",
+	tutorName: "Rimi Bobal",
+	education: "BSc (Physics Honors)",
 	rating: "4.5",
-	totalReview: "1.3 k",
+	totalReview: "13",
 	subjectsOffer: [
-		{ name: "Mathematics", price: "100",class:"X" },
-		{ name: "English", price: "200" ,class:"XI"},
+		{ name: "Physics", price: "699",class:"X" },
+		{ name: "Mathematics", price: "799" ,class:"XI"},
 	],
 };
 
 const TutorProfile = () => {
+	const path = window.location;
+	console.log(path.pathname.split("/")[2]);
+
+	const handleEnroll = () => {
+		Swal.fire(({
+			position: "center",
+			icon: "success",
+			title: "You have enrolled succesfully! Check email for more info",
+			showConfirmButton: false,
+			timer: 2500,
+
+		}));
+	};
+
 	return (
 		<CContainer>
 		
@@ -75,7 +90,7 @@ const TutorProfile = () => {
 										<p>{data.name} for class {data.class}th</p>
 									</Grid>
 									<Grid item xs={1}></Grid>
-									<Grid item xs={5}><Button sx={{width:"100%",color:"white"}} variant="contained">Enroll@{data.price}</Button></Grid>
+									<Grid item xs={5}><Button sx={{width:"100%",color:"white"}} variant="contained" onClick={handleEnroll}>Enroll@{data.price} / month</Button></Grid>
 								</Grid>
 							);
 						})}

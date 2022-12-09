@@ -21,7 +21,7 @@ export default function Auth() {
 	const { state, actions } = React.useContext(AppContext);
 	const [isSignup,setIsSignup]=useState(false);
 	const [values,setValues]=useState({
-		name:"",email:"",password:"",showPassword:true,gender:""
+		name:"",email:"",password:"",showPassword:false,gender:""
 	});
 
 	function onChange(e) {
