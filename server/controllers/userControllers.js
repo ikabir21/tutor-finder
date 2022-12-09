@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 import Subject from "../models/subjectModel.js";
 import ErrorMessage from "../utils/errorMessage.js";
 import { generateToken } from "../utils/jwt.js";
+import mongoose from "mongoose";
 
 export const register = async (req, res, next) => {
 	const { error } = validate(req.body, SIGNUP);
@@ -68,7 +69,6 @@ export const updateProfile = (req, res, next) => {
 		state,
 		schoolName, 
 		className, 
-		coursesTaken = [], 
 		subjectsTaught = [],
 		classesTaught = [],
 		designation,
@@ -90,7 +90,6 @@ export const updateProfile = (req, res, next) => {
 				state,
 				schoolName,
 				className,
-				coursesTaken,
 				subjectsTaught,
 				classesTaught,
 				designation,
@@ -101,11 +100,23 @@ export const updateProfile = (req, res, next) => {
 						await User.updateOne({email}, {isProfileComplete: true});
 					}
 					console.log(obj);
+					if (!obj) return next(new ErrorMessage("User not found", 400));
+					const coursesTaken = [];
+					const courses = obj.coursesTaken;
+					for (let i=0; i<courses.length; ++i) {
+						const sub = await Subject.findById(courses[i].courseId);
+						console.log(sub);
+						coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+					}
+					// obj.coursesTaken.forEach(async (course) => {
+					// });
+					console.log(coursesTaken);
 					res.status(200).json({
 						success: true,
 						message: "Successfully updated profile",
 						_id: obj._id,
-						user: obj
+						user: obj,
+						coursesTaken
 					});
 				});
 		});
@@ -161,10 +172,64 @@ export const getProfile = (req, res, next) => {
 	console.log(req.user);
 	if (!userId) next(new ErrorMessage("Access denied", 401));
 	User.findById(userId).select("-password").populate("subjectsTaught")
-		.then((user) => {
+		.then(async (user) => {
+			const coursesTaken = [];
+			const courses = user.coursesTaken;
+			for (let i=0; i<courses.length; ++i) {
+				const sub = await Subject.findById(courses[i].courseId);
+				console.log(sub);
+				coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+			}
+			// user.coursesTaken.forEach(async (course) => {
+			// });
+			console.log(coursesTaken);
 			if (!user) return next(new ErrorMessage("User not found", 400));
-			return res.status(200).json({success: true, user});
+			user.coursesTaken = coursesTaken;
+			return res.status(200).json({success: true, user, coursesTaken});
 		});
+};
+
+
+export const enrollcourse = (req, res, next) => {
+	const userId = req.user.userId;
+	const subjectId = req.params.subjectId;
+	
+
+	const query = { _id: mongoose.Types.ObjectId(userId) };
+	const operation = {};
+	query["coursesTaken"] = {
+		$not: {
+			$elemMatch: {
+				courseId: mongoose.Types.ObjectId(subjectId),
+			},
+		},
+	};
+	operation["coursesTaken"] = {
+		courseId: subjectId,
+		joinedAt: new Date(),
+	};
+
+	User.findOneAndUpdate(
+		query,
+		{
+			$push: operation,
+		},
+		{new: true}
+	).then(async (result) => {
+		if (!result) return next(new ErrorMessage("Already enrolled", 400));
+		const coursesTaken = [];
+		const courses = result.coursesTaken;
+		for (let i=0; i<courses.length; ++i) {
+			const sub = await Subject.findById(courses[i].courseId);
+			console.log(sub);
+			coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+		}
+		console.log(coursesTaken);
+		if (!result) return next(new ErrorMessage("User not found", 400));
+		result.coursesTaken = coursesTaken;
+		return res.status(200).json({success: true, user: result, coursesTaken});
+	}
+	).catch(err => next(err));
 };
 
 

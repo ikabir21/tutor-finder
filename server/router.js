@@ -2,7 +2,7 @@ import express from "express";
 import { addRating, getRatiing } from "./controllers/ratingControllers.js";
 
 // project imports
-import { addSubject, changePassword, getProfile, login, register, updateProfile } from "./controllers/userControllers.js";
+import { addSubject, changePassword, enrollcourse, getProfile, login, register, updateProfile } from "./controllers/userControllers.js";
 import { isAuth } from "./middlewares/authMiddlewares.js";
 
 const router = express.Router();
@@ -22,5 +22,9 @@ router.post("/change-password", isAuth, changePassword);
 // Rating rooutes
 router.post("/add-rating", isAuth, addRating);
 router.get("/get-rating/:subjectId", isAuth, getRatiing);
+
+// Enroll course
+
+router.get("/enroll/:subjectId", isAuth, enrollcourse);
 
 export default router;

@@ -23,6 +23,9 @@ export const initialState = {
 	user: localStorage.getItem("user")
 		? JSON.parse(localStorage.getItem("user"))
 		: {},
+	coursesTaken: localStorage.getItem("coursesTaken")
+		? JSON.parse(localStorage.getItem("coursesTaken"))
+		: {},
 	alerts: [],
 	isProfileComplete: localStorage.getItem("isProfileComplete")
 		? JSON.parse(localStorage.getItem("isProfileComplete"))
@@ -49,6 +52,7 @@ const reducer = (state, action) => {
 		localStorage.setItem("user", JSON.stringify(user));
 		localStorage.setItem("accessToken", JSON.stringify(user.accessToken));
 		localStorage.setItem("isProfileComplete", JSON.stringify(user.isProfileComplete));
+		localStorage.setItem("coursesTaken", JSON.stringify(action.payload.coursesTaken));
 		return {
 			...state,
 			isAuth: true,
@@ -71,8 +75,10 @@ const reducer = (state, action) => {
 	case SET_PROFILE:
 	case UPDATE_PROFILE:
 		localStorage.setItem("user", JSON.stringify(action.payload.user));
+		localStorage.setItem("coursesTaken", JSON.stringify(action.payload.coursesTaken));
 		// localStorage.setItem("isAdmin", JSON.stringify(action.payload.isAdmin));
-		return { ...state, user: action.payload.user };
+		console.log(action.payload);
+		return { ...state, user: action.payload.user, coursesTaken: action.payload.coursesTaken };
 	case SET_PAYMENTS:
 		const payments = {
 			accountNo: action.payload.bankDetails.accountNo,

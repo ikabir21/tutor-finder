@@ -22,8 +22,11 @@ const userSchema = mongoose.Schema(
 		className: {type: String, default: ""},
 		coursesTaken: [
 			{
-				type: Schema.Types.ObjectId,
-				ref: "Subject"
+				courseId : {
+					type: Schema.Types.ObjectId,
+					ref: "Subject"
+				},
+				joinedAt: {type: Date, default: Date.now}
 			}
 		],
 		subjectsTaught: [
