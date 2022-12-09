@@ -119,7 +119,7 @@ const getActions = (dispatch) => {
 		rate: async (value) => {
 			dispatch({ type: LOADING });
 			try {
-				const { data } = await Axios.post("/user/profile", value);
+				const { data } = await Axios.post("/add-rating", value);
 				console.log(data);
 				// dispatch({ type: SET_PROFILE, payload: data });
 				Swal.fire({
