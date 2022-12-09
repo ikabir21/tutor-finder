@@ -104,7 +104,7 @@ const StudentDashboard = () => {
 						justifyContent: "space-between",
 					}}
 				>
-					{state.coursesTaken.map((course, k) => <CourseTaken key={k} name={course.name} date={course.joinedAt} />)}
+					{state.coursesTaken.map((course, k) => <CourseTaken key={k} className={state.user.className} name={course.name} date={course.joinedAt} subjectId={course.subjectId} teacherId={course.ownerId} />)}
 				</div>
 			</Box>
 		</CContainer>

@@ -42,18 +42,25 @@ export const login = (req, res, next) => {
 		.then((user) => {
 			console.log(user);
 			if (!user) return next(new ErrorMessage("User not found", 400));
-			user.comparePassword(password, (err, isMatched) => {
+			user.comparePassword(password, async (err, isMatched) => {
 				if (err) return next(err);
 				if (!isMatched)
 					return next(new ErrorMessage("Invalid Credntials", 401));
 				delete user["passoword"];
-				res.status(200).json({
-					success: true,
-					message: "Successfully logged in",
-					_id: user._id,
-					user,
-					token: generateToken({ userId: user._id, email }),
-				});
+
+				const coursesTaken = [];
+				const courses = user.coursesTaken;
+				for (let i=0; i<courses.length; ++i) {
+					const sub = await Subject.findById(courses[i].courseId);
+					console.log(sub);
+					coursesTaken.push({subjectId: sub._id, ownerId: sub.ownerId, name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+				}
+				// user.coursesTaken.forEach(async (course) => {
+				// });
+				console.log(coursesTaken);
+				if (!user) return next(new ErrorMessage("User not found", 400));
+				user.coursesTaken = coursesTaken;
+				return res.status(200).json({success: true, user, coursesTaken, token: generateToken({ userId: user._id, email }),});
 			});
 		})
 		.catch((err) => next(err));
@@ -106,7 +113,7 @@ export const updateProfile = (req, res, next) => {
 					for (let i=0; i<courses.length; ++i) {
 						const sub = await Subject.findById(courses[i].courseId);
 						console.log(sub);
-						coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+						coursesTaken.push({subjectId: sub._id, ownerId: sub.ownerId, name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
 					}
 					// obj.coursesTaken.forEach(async (course) => {
 					// });
@@ -178,7 +185,7 @@ export const getProfile = (req, res, next) => {
 			for (let i=0; i<courses.length; ++i) {
 				const sub = await Subject.findById(courses[i].courseId);
 				console.log(sub);
-				coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+				coursesTaken.push({subjectId: sub._id, ownerId: sub.ownerId, name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
 			}
 			// user.coursesTaken.forEach(async (course) => {
 			// });
@@ -222,7 +229,7 @@ export const enrollcourse = (req, res, next) => {
 		for (let i=0; i<courses.length; ++i) {
 			const sub = await Subject.findById(courses[i].courseId);
 			console.log(sub);
-			coursesTaken.push({name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
+			coursesTaken.push({subjectId: sub._id, ownerId: sub.ownerId, name: sub.subjectName, totalRating: sub.totalRating, totalRatingCount: sub.totalRatingCount, joinedAt: courses[i].joinedAt});
 		}
 		console.log(coursesTaken);
 		if (!result) return next(new ErrorMessage("User not found", 400));
