@@ -6,7 +6,7 @@ import { AppContext } from "../context";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+// import CTextField from "@mui/material/CTextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,6 +16,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+import CTextField from "../components/CTextField";
 export default function Auth() {
 	const { state, actions } = React.useContext(AppContext);
 	const [isSignup,setIsSignup]=useState(false);
@@ -42,8 +43,8 @@ export default function Auth() {
 			{isSignup&&(<form action="">
 				<Box sx={{backgroundColor:"#fffffd",display:"flex",flexDirection:"column",maxWidth:"400px",margin:"auto",p:"40px",borderRadius:"10px",boxShadow:2}}>
 					<Typography margin="normal" variant="h3" align="center">Registration</Typography>
-					<TextField required onChange={onChange} name="name" value={values.name} sx={{mt:2}} variant="outlined" type={"text"} label="Name" />
-					<TextField
+					<CTextField required onChange={onChange} name="name" value={values.name} sx={{mt:2}} variant="outlined" type={"text"} label="Name" />
+					<CTextField
 						id="outlined-select-currency"
 						select
 						label="Gender"
@@ -56,10 +57,10 @@ export default function Auth() {
 						<MenuItem value="male">Male</MenuItem>
 						<MenuItem value="female">Female</MenuItem>
 						<MenuItem value="other">Other</MenuItem>
-					</TextField>
+					</CTextField>
 					
-					<TextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
-					<TextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
+					<CTextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
+					<CTextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
 						InputProps={{
 							endAdornment: (
 								<InputAdornment>
@@ -77,8 +78,8 @@ export default function Auth() {
 				<Box sx={{backgroundColor:"#fffffd",display:"flex",flexDirection:"column",maxWidth:"400px",margin:"auto",p:"40px",borderRadius:"10px",boxShadow:2}}>
 					<Typography margin="normal" variant="h3" align="center">Login</Typography>
 					
-					<TextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
-					<TextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
+					<CTextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
+					<CTextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
 						InputProps={{
 							endAdornment: (
 								<InputAdornment>

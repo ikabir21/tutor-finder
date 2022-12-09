@@ -1,11 +1,12 @@
 import React from "react";
 
-import {Grid,TextField} from "@mui/material";
+import {Grid} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Typography, Stack, Button } from "@mui/material";
 import CContainer from "../components/CContainer";
 import TutorCard from "../components/TutorCard";
 
+import CTextField from "../components/CTextField";
 
 const Search = () => {
 	return (
@@ -19,7 +20,7 @@ const Search = () => {
 						margin: "30px",
 					}}
 				>
-					<TextField
+					<CTextField
 						sx={{width:"300px"}}
 						size="small"
 						type='search'

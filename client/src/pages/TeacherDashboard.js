@@ -5,13 +5,13 @@ import {
 	Stack,
 	Box,
 	Avatar,
-	TextField,
 	Select,
 	MenuItem,
 	Popper,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import CTextField from "../components/CTextField";
 import CContainer from "../components/CContainer";
 import Course from "../components/Course";
 import { AppContext } from "../context";
@@ -74,7 +74,7 @@ const TeacherDashboard = () => {
 							<Typography component='h6' variant='h6' mr={4}>
                 Address
 							</Typography>
-							<TextField
+							<CTextField
 								value={values.address}
 								rows={2}
 								multiline
@@ -88,13 +88,13 @@ const TeacherDashboard = () => {
 								<Typography component='h6' variant='h6' mr={4}>
                   Pin
 								</Typography>
-								<TextField value={values.pin} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, pin: e.target.value}))} />
+								<CTextField value={values.pin} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, pin: e.target.value}))} />
 							</div>
 							<div style={{ display: "flex", alignItems: "center" }}>
 								<Typography component='h6' variant='h6' mr={4}>
                   State
 								</Typography>
-								<TextField value={values.state} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, state: e.target.value}))} />
+								<CTextField value={values.state} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, state: e.target.value}))} />
 							</div>
 						</Stack>
 						<Button variant='contained' onClick={updateDetails}>Save Details</Button>
@@ -160,7 +160,7 @@ const TeacherDashboard = () => {
 									<Typography component='body2' variant='p' mr={4}>
                     Name
 									</Typography>
-									<TextField
+									<CTextField
 										value={course.subjectName}
 										variant='outlined'
 										Size='small'
@@ -172,7 +172,7 @@ const TeacherDashboard = () => {
 									<Typography component='caption' variant='p' mr={4}>
                     Price
 									</Typography>
-									<TextField
+									<CTextField
 										value={course.price}
 										type="number"
 										variant='outlined'
@@ -185,7 +185,7 @@ const TeacherDashboard = () => {
 									<Typography component='caption' variant='p' mr={4}>
                     Start Time
 									</Typography>
-									<TextField
+									<CTextField
 										value={course.startTime}
 										variant='outlined'
 										Size='small'
@@ -197,7 +197,7 @@ const TeacherDashboard = () => {
 									<Typography component='caption' variant='p' mr={4}>
                     End Time
 									</Typography>
-									<TextField
+									<CTextField
 										value={course.endTime}
 										variant='outlined'
 										Size='small'

@@ -6,12 +6,13 @@ import {
 	Stack,
 	Box,
 	Avatar,
-	TextField,
+
 	Select,
 	MenuItem,
 } from "@mui/material";
 import CContainer from "../components/CContainer";
 import CourseTaken from "../components/CourseTaken";
+import CTextField from "../components/CTextField";
 const StudentDashboard = () => {
 	return (
 		<CContainer>
@@ -46,7 +47,7 @@ const StudentDashboard = () => {
 							<Typography component='h6' variant='h6' mr={4}>
                 Address
 							</Typography>
-							<TextField
+							<CTextField
 								defaultValue='Address'
 								rows={2}
 								multiline
@@ -59,13 +60,13 @@ const StudentDashboard = () => {
 								<Typography component='h6' variant='h6' mr={4}>
                   Pin
 								</Typography>
-								<TextField defaultValue='Pin' variant='outlined' />
+								<CTextField defaultValue='Pin' variant='outlined' />
 							</div>
 							<div style={{ display: "flex", alignItems: "center" }}>
 								<Typography component='h6' variant='h6' mr={4}>
                   State
 								</Typography>
-								<TextField defaultValue='State' variant='outlined' />
+								<CTextField defaultValue='State' variant='outlined' />
 							</div>
 						</Stack>
 						<Button variant='contained'>Save Details</Button>
