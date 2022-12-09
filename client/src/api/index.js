@@ -4,8 +4,8 @@ import axios from "axios";
 const ENDPOINT = process.env.REACT_APP_ENDPOINT || "http://localhost:4000";
 
 // const accessToken = localStorage.getItem("accessToken");
-console.log(localStorage.getItem("accessToken"));
-const accessToken = localStorage.getItem("accessToken");
+const accessToken = localStorage.getItem("accessToken") ? JSON.parse(localStorage.getItem("accessToken")) : null;
+console.log(accessToken);
 
 const Axios = axios.create({
 	baseURL: ENDPOINT,

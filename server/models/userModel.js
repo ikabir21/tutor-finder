@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema(
 		accountType: {type: String, enum: ["STUDENT", "TEACHER", "ADMIN"], default: "STUDENT"},
 		address: {type: String, default: ""},
 		designation: {type: String, default: ""},
+		gender: {type: String, enum: ["MALE", "FEMALE", "NON_BINARY"]},
 		city: {type: String, default: ""},
 		pin: {type: String, default: ""},
 		state: {type: String, default: ""},
@@ -30,7 +31,8 @@ const userSchema = mongoose.Schema(
 				type: Schema.Types.ObjectId,
 				ref: "Subject"
 			}
-		]
+		],
+		classesTaught: [ { type: String }]
 	},
 	{ timestamps: true }
 );

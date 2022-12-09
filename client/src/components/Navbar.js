@@ -52,7 +52,7 @@ const Navbar = () => {
 					<Button sx={{ color: "#fff" }} component={Link} to="/">
 							Home
 					</Button>
-					<Button sx={{ color: "#fff" }} component={Link} to="/search">
+					<Button sx={{ color: "#fff" }} component={Link} to={"/search"}>
 							Explore
 					</Button>
 					{state.isAuth && (

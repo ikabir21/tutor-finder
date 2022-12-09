@@ -12,6 +12,7 @@ import {
 	EDIT_COURSE,
 	DELETE_COURSE,
 	ADD_COURSE,
+	UPDATE_PROFILE
 } from "./constants";
 
 export const initialState = {
@@ -68,21 +69,10 @@ const reducer = (state, action) => {
 		};
 
 	case SET_PROFILE:
-		const profile = {
-			name: action.payload.name,
-			personalEmail: action.payload.personalEmail,
-			instituteEmail: action.payload.instituteEmail,
-			scholarId: action.payload.scholarId,
-			mobile: action.payload.mobile,
-			branch: action.payload.branch,
-			projects: action.payload.projects,
-			cgpa: action.payload.cgpa,
-			results: action.payload.results,
-		};
-		localStorage.setItem("profile", JSON.stringify(profile));
-		localStorage.setItem("isAdmin", JSON.stringify(action.payload.isAdmin));
-		return { ...state, profile };
-
+	case UPDATE_PROFILE:
+		localStorage.setItem("user", JSON.stringify(action.payload.user));
+		// localStorage.setItem("isAdmin", JSON.stringify(action.payload.isAdmin));
+		return { ...state, user: action.payload.user };
 	case SET_PAYMENTS:
 		const payments = {
 			accountNo: action.payload.bankDetails.accountNo,
@@ -106,9 +96,9 @@ const reducer = (state, action) => {
 	case ADD_COURSE:
 		return {
 			...state,
-			profile: {
-				...state.profile,
-				results: [...state.profile.results, action.payload],
+			user: {
+				...state.user,
+				subjectsTaught: [...state.profile.subjectsTaught, action.payload],
 			},
 		};
 	case DELETE_PROJECTS:
