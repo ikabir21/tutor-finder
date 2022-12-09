@@ -16,7 +16,7 @@ export default function BasicCard() {
           <Typography variant='h6' component='h6' color='text.secondary'>
             Chemistry
           </Typography>
-          <Typography variant='body1' component='p'>
+          <Typography variant='body1' component='p' alignItems='center'>
             <StarIcon /> 4.5/5
           </Typography>
         </Stack>
