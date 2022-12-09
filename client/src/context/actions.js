@@ -116,6 +116,38 @@ const getActions = (dispatch) => {
 				});
 			}
 		},
+		rate: async (value) => {
+			dispatch({ type: LOADING });
+			try {
+				const { data } = await Axios.post("/user/profile", value);
+				console.log(data);
+				// dispatch({ type: SET_PROFILE, payload: data });
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: "Rated successfully!",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			} catch (error) {
+				const msg =
+					error.response.status === 401
+						? "Access Denied"
+						: error.response && error.response?.data?.message
+							? error.response?.data?.message
+							: error.message;
+
+				// alert(msg);
+				// window.location.href = "/auth";
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: msg,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			}
+		},
 		updateProfile: async (user) => {
 			dispatch({ type: LOADING });
 			try {

@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import * as React from "react";
-import {useState}  from "react";
+import {useState, useContext}  from "react";
 
 import Card from "@mui/material/Card";
 
@@ -15,9 +16,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import CTextField from "./CTextField";
 import Typography from "@mui/material/Typography";
+import { AppContext } from "../context";
 
-export default function BasicCard() {
-
+export default function BasicCard({className, name, date, subjectId, teacherId}) {
+	const {state, actions} = useContext(AppContext);
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState(2);
 
@@ -33,10 +35,9 @@ export default function BasicCard() {
 	return (
 		<Card sx={{ minWidth: 275 ,backgroundColor:"white"}}>
 			<CardContent>
-				<Typography variant="h6">Bright Tuitions</Typography>
 				<Grid container >
 					<Grid item xs={7}><Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom style={{border:"1px solid black",padding:"3px"}}>
-          CHEMISTRY for Xth
+						{name} for {className}th
 					</Typography></Grid>
 					<Grid xs={1}></Grid>
 					<Grid item xs={4}><Button variant="outlined" onClick={handleClickOpen}>
@@ -51,11 +52,8 @@ export default function BasicCard() {
 								value={ratingValue}
 								onChange={(event, newValue) => {
 									console.log(newValue);
-									setRatingValue(newValue);
-									setTimeout(() => {
-										handleClose();
-
-									}, 1000);
+									actions.rate({value: newValue, subjectId, teacherId});
+									handleClose();
 								}}
 							/>
 						</DialogContent>
@@ -65,9 +63,8 @@ export default function BasicCard() {
 						</DialogActions>
 					</Dialog></Grid>
 				</Grid>
-				
-				<Typography variant='body2'>Joining Date: 12/2/22</Typography>
 
+				<Typography variant='body2'>Joined on: {(new Date(date)).toDateString()}</Typography>
 			</CardContent>
 		</Card>
 	);
