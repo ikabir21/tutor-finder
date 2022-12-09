@@ -110,6 +110,7 @@ const StudentDashboard = () => {
 					<CourseTaken />
 					<CourseTaken />
 					<CourseTaken />
+					<CourseTaken />
 				</div>
 			</Box>
 		</CContainer>
