@@ -6,13 +6,23 @@ import {
 	Toolbar,
 	Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {Link} from "react-router-dom";
+import { AppContext } from "../context";
 
 const Navbar = () => {
 	const [login, setLogin] = useState(false);
 	const navItems = ["Home", "Explore", "Login"];
+	const {state, actions} = useContext(AppContext);
+
+	const handleLogin = () => {
+		if (state.isAuth) {
+			actions.logout();
+		} else {
+			window.location.href = "/auth";
+		}
+	};
 
 	return (
 		<AppBar component='nav'>
@@ -39,11 +49,20 @@ const Navbar = () => {
           Tutor Finder
 				</Typography>
 				<Box sx={{ display: { xs: "none", sm: "block" } }}>
-					{navItems.map((item) => (
-						<Button key={item} sx={{ color: "#fff" }}>
-							{item}
+					<Button sx={{ color: "#fff" }} component={Link} to="/">
+							Home
+					</Button>
+					<Button sx={{ color: "#fff" }} component={Link} to={"/search"}>
+							Explore
+					</Button>
+					{state.isAuth && (
+						<Button sx={{ color: "#fff" }} component={Link} to={state.user?.accountType === "TEACHER" ? "/teacher-dashboard" : "/student-dashboard"}>
+							Dashboard
 						</Button>
-					))}
+					)}
+					<Button sx={{ color: "#fff" }} onClick={handleLogin}>
+						{state.isAuth ? "Logout" : "Login"}
+					</Button>
 				</Box>
 			</Toolbar>
 		</AppBar>

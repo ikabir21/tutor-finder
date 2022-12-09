@@ -2,7 +2,7 @@
 const teacher = [
   {
     id: 1,
-    category: 'games',
+    category: 'Math',
     name: 'Leanne Graham',
     username: 'Bret',
     email: 'Sincere@april.biz',
@@ -26,7 +26,7 @@ const teacher = [
   },
   {
     id: 2,
-    category: 'games',
+    category: 'Math',
     name: 'Ervin Howell',
     username: 'Antonette',
     email: 'Shanna@melissa.tv',
@@ -50,7 +50,7 @@ const teacher = [
   },
   {
     id: 3,
-    category: 'games',
+    category: 'Chemistry',
     name: 'Clementine Bauch',
     username: 'Samantha',
     email: 'Nathan@yesenia.net',
@@ -75,7 +75,7 @@ const teacher = [
   {
     id: 4,
 
-    category: 'movies',
+    category: 'Chemistry',
 
     name: 'Patricia Lebsack',
     username: 'Karianne',
@@ -100,7 +100,7 @@ const teacher = [
   },
   {
     id: 5,
-    category: 'movies',
+    category: 'Chemistry',
     name: 'Chelsey Dietrich',
     username: 'Kamren',
     email: 'Lucio_Hettinger@annie.ca',
@@ -124,7 +124,7 @@ const teacher = [
   },
   {
     id: 6,
-    category: 'shows',
+    category: 'Physics',
     name: 'Mrs. Dennis Schulist',
     username: 'Leopoldo_Corkery',
     email: 'Karley_Dach@jasper.info',
@@ -148,7 +148,7 @@ const teacher = [
   },
   {
     id: 7,
-    category: 'shows',
+    category: 'Physics',
     name: 'Kurtis Weissnat',
     username: 'Elwyn.Skiles',
     email: 'Telly.Hoeger@billy.biz',
@@ -172,7 +172,7 @@ const teacher = [
   },
   {
     id: 8,
-    category: 'shows',
+    category: 'Physics',
     name: 'Nicholas Runolfsdottir V',
     username: 'Maxime_Nienow',
     email: 'Sherwood@rosamond.me',
@@ -196,7 +196,7 @@ const teacher = [
   },
   {
     id: 9,
-    category: 'other',
+    category: 'Chemistry',
     name: 'Glenna Reichert',
     username: 'Delphine',
     email: 'Chaim_McDermott@dana.io',
@@ -220,7 +220,7 @@ const teacher = [
   },
   {
     id: 10,
-    category: 'other',
+    category: 'Physics',
     name: 'Clementina DuBuque',
     username: 'Moriah.Stanton',
     email: 'Rey.Padberg@karina.biz',

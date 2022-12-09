@@ -23,3 +23,5 @@ export const DELETE_COURSE = "DELETE_COURSE";
 export const EDIT_COURSE = "EDIT_PROJECTS";
 
 export const ADD_COURSE = "ADD_COURSE";
+
+export const UPDATE_PROFILE = "UPDATE_PROFILE";

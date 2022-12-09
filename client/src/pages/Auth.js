@@ -6,29 +6,26 @@ import { AppContext } from "../context";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+// import CTextField from "@mui/material/CTextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+import CTextField from "../components/CTextField";
 export default function Auth() {
 	const { state, actions } = React.useContext(AppContext);
-	// console.log(state);
-	// if (state.isAuth) {
-	// 	if (state.isCompleteProfile) {
-			
-	// 	}
-	// 	history.push("");
-	// }
-
 	const [isSignup,setIsSignup]=useState(false);
 	const [values,setValues]=useState({
-		name:"",email:"",password:"",showPassword:true
+		name:"",email:"",password:"",showPassword:true,gender:""
 	});
 
 	function onChange(e) {
+		console.log(values.gender);
 		setValues({...values,[e.target.name]:e.target.value});
 	}
 	function handleClickShowPassword(e) {
@@ -46,9 +43,24 @@ export default function Auth() {
 			{isSignup&&(<form action="">
 				<Box sx={{backgroundColor:"#fffffd",display:"flex",flexDirection:"column",maxWidth:"400px",margin:"auto",p:"40px",borderRadius:"10px",boxShadow:2}}>
 					<Typography margin="normal" variant="h3" align="center">Registration</Typography>
-					<TextField required onChange={onChange} name="name" value={values.name} sx={{mt:2}} variant="outlined" type={"text"} label="Name" />
-					<TextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
-					<TextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
+					<CTextField required onChange={onChange} name="name" value={values.name} sx={{mt:2}} variant="outlined" type={"text"} label="Name" />
+					<CTextField
+						id="outlined-select-currency"
+						select
+						label="Gender"
+						value={values.gender}
+						onChange={onChange}
+						name="gender"
+						sx={{mt:2}}
+						required
+					>
+						<MenuItem value="male">Male</MenuItem>
+						<MenuItem value="female">Female</MenuItem>
+						<MenuItem value="other">Other</MenuItem>
+					</CTextField>
+					
+					<CTextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
+					<CTextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
 						InputProps={{
 							endAdornment: (
 								<InputAdornment>
@@ -66,8 +78,8 @@ export default function Auth() {
 				<Box sx={{backgroundColor:"#fffffd",display:"flex",flexDirection:"column",maxWidth:"400px",margin:"auto",p:"40px",borderRadius:"10px",boxShadow:2}}>
 					<Typography margin="normal" variant="h3" align="center">Login</Typography>
 					
-					<TextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
-					<TextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
+					<CTextField required onChange={onChange} name="email" value={values.email} sx={{mt:2}} variant="outlined" type={"email"} label="Email"/>
+					<CTextField required onChange={onChange} name="password" value={values.password} sx={{mt:2}} variant="outlined" type={values.showPassword?"text":"password"} label="Password" 
 						InputProps={{
 							endAdornment: (
 								<InputAdornment>
