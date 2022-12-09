@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect, useContext} from "react";
 
 import {
 	Typography,
@@ -6,14 +6,25 @@ import {
 	Stack,
 	Box,
 	Avatar,
-
 	Select,
 	MenuItem,
 } from "@mui/material";
 import CContainer from "../components/CContainer";
 import CourseTaken from "../components/CourseTaken";
 import CTextField from "../components/CTextField";
+import { AppContext } from "../context";
+
 const StudentDashboard = () => {
+	const {state, actions} = useContext(AppContext);
+	const [values, setValues] = useState({gender: "", name: "", email: "", address: "", pin: "", state: "", profilePic: "", coursesTaken: [], className: ""});
+	console.log(state);
+	useEffect(() => {
+		actions.getProfile();
+	}, []);
+	useEffect(() => {
+		if (state?.user) setValues(prev => ({...prev, gender: state.user.gender, name: state.user.name, email: state.user.email, address: state.user.address, pin: state.user.pin, state: state.user.state, profilePic: state.user.profilePic, coursesTaken: state.coursesTaken, className: state.user.className}));
+	}, [state]);
+
 	return (
 		<CContainer>
 			<Stack
@@ -31,24 +42,10 @@ const StudentDashboard = () => {
 					<Stack direction='column' justifyContent='space-evenly' spacing={3}>
 						<div style={{ display: "flex", alignItems: "center" }}>
 							<Typography component='h6' variant='h6' mr={4}>
-                Gender
-							</Typography>
-							<Select
-								variant='outlined'
-								fullWidth
-								name='relationshipStatusData'
-								i
-							>
-								<MenuItem value={0}>Male</MenuItem>
-								<MenuItem value={1}>Female</MenuItem>
-							</Select>
-						</div>
-						<div style={{ display: "flex", alignItems: "center" }}>
-							<Typography component='h6' variant='h6' mr={4}>
                 Address
 							</Typography>
 							<CTextField
-								defaultValue='Address'
+								value={values.address}
 								rows={2}
 								multiline
 								variant='outlined'
@@ -60,13 +57,13 @@ const StudentDashboard = () => {
 								<Typography component='h6' variant='h6' mr={4}>
                   Pin
 								</Typography>
-								<CTextField defaultValue='Pin' variant='outlined' />
+								<CTextField value={values.pin} variant='outlined' />
 							</div>
 							<div style={{ display: "flex", alignItems: "center" }}>
 								<Typography component='h6' variant='h6' mr={4}>
                   State
 								</Typography>
-								<CTextField defaultValue='State' variant='outlined' />
+								<CTextField value={values.state} variant='outlined' />
 							</div>
 						</Stack>
 						<Button variant='contained'>Save Details</Button>
@@ -79,19 +76,19 @@ const StudentDashboard = () => {
 					spacing={0}
 				>
 					<Avatar
-						alt='Travis Howard'
-						src='https://picsum.photos/200/300'
+						alt={values.name}
+						src={values.profilePic}
 						style={{ height: "150px", width: "150px" }}
 					/>
 
 					<Typography variant='h5' component='h4'>
-            Student name
+						{values.name} ({values.gender === "MALE" ? "M" : values.gender === "FEMALE" ? "F" : "Non Binary"})
 					</Typography>
 					<Typography variant='h6' component='h5'>
-            email@gamil.com
+						{values.email}
 					</Typography>
 					<Typography variant='body1' component='h5'>
-            Class 12th
+            Class {values.className}th
 					</Typography>
 				</Stack>
 			</Stack>
@@ -107,10 +104,7 @@ const StudentDashboard = () => {
 						justifyContent: "space-between",
 					}}
 				>
-					<CourseTaken />
-					<CourseTaken />
-					<CourseTaken />
-					<CourseTaken />
+					{state.coursesTaken.map((course, k) => <CourseTaken key={k} className={state.user.className} name={course.name} date={course.joinedAt} subjectId={course.subjectId} teacherId={course.ownerId} />)}
 				</div>
 			</Box>
 		</CContainer>
