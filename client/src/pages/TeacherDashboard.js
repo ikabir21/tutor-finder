@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
 	Typography,
 	Button,
@@ -11,17 +11,45 @@ import {
 	Popper,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import CContainer from "../components/CContainer";
 import Course from "../components/Course";
+import { AppContext } from "../context";
 const TeacherDashboard = () => {
+	const {state, actions} = useContext(AppContext);
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [values, setValues] = useState({gender: "", name: "", designation: "", email: "", address: "", pin: "", state: "", profilePic: ""});
+
+	useEffect(() => {
+		if (state?.user) setValues(prev => ({...prev, gender: state.user.gender, name: state.user.name, designation: state.user.designation, email: state.user.email, address: state.user.address, pin: state.user.pin, state: state.user.state, profilePic: state.user.profilePic}));
+	}, [state]);
 
 	const handleClick = (event) => {
 		setAnchorEl(anchorEl ? null : event.currentTarget);
 	};
 
-	const open = Boolean(anchorEl);
+	useEffect(() => {
+		actions.getProfile();
+	}, []);
+
+	const updateDetails = () => {
+		actions.updateProfile({...state.user, ...values});
+	};
+	const [open, setOpen] = useState(false);
+	const [course, setCourse] = useState({subjectName: "", price: 0, startTime: "", endTime: ""});
+
+	useEffect(() => {
+		setOpen(Boolean(anchorEl));
+	}, [Boolean(anchorEl)]);
+	const close = () => {
+		setOpen(false);
+	};
 	const id = open ? "simple-popper" : undefined;
+
+	const addCourse = () => {
+		actions.addCourse(course);
+	};
+
 	return (
 		<CContainer>
 			<Stack
@@ -44,28 +72,15 @@ const TeacherDashboard = () => {
 					<Stack direction='column' justifyContent='space-evenly' spacing={3}>
 						<div style={{ display: "flex", alignItems: "center" }}>
 							<Typography component='h6' variant='h6' mr={4}>
-                Gender
-							</Typography>
-							<Select
-								variant='outlined'
-								fullWidth
-								name='relationshipStatusData'
-								i
-							>
-								<MenuItem value={0}>Male</MenuItem>
-								<MenuItem value={1}>Female</MenuItem>
-							</Select>
-						</div>
-						<div style={{ display: "flex", alignItems: "center" }}>
-							<Typography component='h6' variant='h6' mr={4}>
                 Address
 							</Typography>
 							<TextField
-								defaultValue='Address'
+								value={values.address}
 								rows={2}
 								multiline
 								variant='outlined'
 								fullWidth
+								onChange={(e) => setValues((prev) => ({...prev, address: e.target.value}))}
 							/>
 						</div>
 						<Stack direction='row' justifyContent='space-between'>
@@ -73,16 +88,16 @@ const TeacherDashboard = () => {
 								<Typography component='h6' variant='h6' mr={4}>
                   Pin
 								</Typography>
-								<TextField defaultValue='Pin' variant='outlined' />
+								<TextField value={values.pin} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, pin: e.target.value}))} />
 							</div>
 							<div style={{ display: "flex", alignItems: "center" }}>
 								<Typography component='h6' variant='h6' mr={4}>
                   State
 								</Typography>
-								<TextField defaultValue='State' variant='outlined' />
+								<TextField value={values.state} variant='outlined' onChange={(e) => setValues((prev) => ({...prev, state: e.target.value}))} />
 							</div>
 						</Stack>
-						<Button variant='contained'>Save Details</Button>
+						<Button variant='contained' onClick={updateDetails}>Save Details</Button>
 					</Stack>
 				</Box>
 				<Stack
@@ -92,23 +107,23 @@ const TeacherDashboard = () => {
 					spacing={0}
 				>
 					<Avatar
-						alt='Travis Howard'
-						src='https://picsum.photos/200/300'
+						alt={values.name}
+						src={values.profilePic}
 						style={{ height: "150px", width: "150px" }}
 					/>
 					<Typography variant='h5' component='h4'>
-            Teacher name
+						{values.name} ({values.gender === "MALE" ? "M" : values.gender === "FEMALE" ? "F" : "Non Binary"})
 					</Typography>
 					<Typography variant='h6' component='h5'>
-            Bsc (Waitjsf)
+						{values.designation}
 					</Typography>
 					<Typography variant='h6' component='h5'>
-            email@gamil.com
+						{values.email}
 					</Typography>
 				</Stack>
 			</Stack>
 
-			<Box m={3} component='div'>
+			<Box m={3}>
 				<Typography variant='h5' component='h4' gutterBottom>
           Courses{" "}
 					<Button
@@ -122,14 +137,20 @@ const TeacherDashboard = () => {
 						<Box
 							sx={{
 								p: 2,
-								border: "1px solid black ",
+								border: "1px solid #F13778 ",
 								borderRadius: "15px",
-								bgcolor: "grey",
+								bgcolor: "#eee",
+								// color: "#eee"
+								position: "relative"
 							}}
 						>
-							<Typography gutterBottom variant='body1' component='h6'>
+							<Stack direction="row" justifyContent="space-between">
+								<Typography gutterBottom variant='body1' component='h6'>
                 Add Courses
-							</Typography>
+								</Typography>
+								<Button sx={{borderRadius: "50%", minWidth: "30px", height: "30px", m: 0, p: 0, "& span": {
+									m : 0
+								}}} startIcon={<CloseIcon />} variant="contained" onClick={close} /></Stack>
 							<Stack
 								direction='column'
 								justifyContent='space-evenly'
@@ -140,9 +161,11 @@ const TeacherDashboard = () => {
                     Name
 									</Typography>
 									<TextField
-										defaultValue='Name'
+										value={course.subjectName}
 										variant='outlined'
 										Size='small'
+										onChange={(e) => setCourse(prev => ({...prev, subjectName: e.target.value}))}
+										placeholder="Enter subject name"
 									/>
 								</div>
 								<div style={{ display: "flex", alignItems: "center" }}>
@@ -150,9 +173,12 @@ const TeacherDashboard = () => {
                     Price
 									</Typography>
 									<TextField
-										defaultValue='Price'
+										value={course.price}
+										type="number"
 										variant='outlined'
 										Size='small'
+										inputProps={{ min: 1 }}
+										onChange={(e) => setCourse(prev => ({...prev, price: e.target.value}))}
 									/>
 								</div>
 								<div style={{ display: "flex", alignItems: "center" }}>
@@ -160,9 +186,11 @@ const TeacherDashboard = () => {
                     Start Time
 									</Typography>
 									<TextField
-										defaultValue='Start Time'
+										value={course.startTime}
 										variant='outlined'
 										Size='small'
+										onChange={(e) => setCourse(prev => ({...prev, startTime: e.target.value}))}
+										placeholder="Enter start time of tuition"
 									/>
 								</div>
 								<div style={{ display: "flex", alignItems: "center" }}>
@@ -170,12 +198,14 @@ const TeacherDashboard = () => {
                     End Time
 									</Typography>
 									<TextField
-										defaultValue='End Time'
+										value={course.endTime}
 										variant='outlined'
 										Size='small'
+										onChange={(e) => setCourse(prev => ({...prev, endTime: e.target.value}))}
+										placeholder="Enter end time of tuition"
 									/>
 								</div>
-								<Button variant='contained'>Add</Button>
+								<Button variant='contained' onClick={addCourse}>Add</Button>
 							</Stack>
 						</Box>
 					</Popper>
@@ -187,9 +217,7 @@ const TeacherDashboard = () => {
 						justifyContent: "space-between",
 					}}
 				>
-					<Course />
-					<Course />
-					<Course />
+					{state.user.subjectsTaught.map((sub, k) => <Course key={k} subjectName={sub.subjectName} price={sub.price} totalRating={sub.totalRating} classesTaught={state.user.classesTaught} />)}
 				</div>
 			</Box>
 		</CContainer>

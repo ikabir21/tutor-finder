@@ -69,15 +69,19 @@ export const updateProfile = (req, res, next) => {
 		schoolName, 
 		className, 
 		coursesTaken = [], 
-		subjectsTaught = []
+		subjectsTaught = [],
+		classesTaught = [],
+		designation,
+		gender
 	} = req.body;
 	const email = req.user.email;
 	const userId = req.user.userId;
+	console.log(userId);
 	if (!userId) next(new ErrorMessage("Access denied", 401));
 	User.findOne({email})
 		.then((user) => {
 			if (!user) return next(new ErrorMessage("User not registered", 400));
-			User.updateOne({email}, {
+			User.findOneAndUpdate({email}, {
 				name,
 				accountType,
 				address,
@@ -87,8 +91,11 @@ export const updateProfile = (req, res, next) => {
 				schoolName,
 				className,
 				coursesTaken,
-				subjectsTaught
-			}, {new: true})
+				subjectsTaught,
+				classesTaught,
+				designation,
+				gender
+			}, {new: true}).populate("subjectsTaught")
 				.then(async (obj) => {
 					if (checkCompleteProfile({name, email, address, city, pin, state, schoolName, className, accountType})) {
 						await User.updateOne({email}, {isProfileComplete: true});
@@ -97,7 +104,8 @@ export const updateProfile = (req, res, next) => {
 					res.status(200).json({
 						success: true,
 						message: "Successfully updated profile",
-						_id: obj._id
+						_id: obj._id,
+						user: obj
 					});
 				});
 		});
@@ -110,14 +118,22 @@ export const addSubject = (req, res, next) => {
 	console.log(req.body);
 	Subject.create({subjectName, price, startTime, endTime, ownerId: userId})
 		.then((obj) => {
-			if (obj)
-				return res.status(200).json({
-					success: true,
-					message: "Successfully entered subject!",
-					_id: obj._id
-				});
+			if (obj) {
+				User.findByIdAndUpdate(userId, {
+					$addToSet: {
+						subjectsTaught: obj._id
+					}
+				}).then((result) => {
+					return res.status(200).json({
+						success: true,
+						message: "Successfully entered subject!",
+						course: obj
+					});
+				}).catch(err => next(err));
+			}
 		})
 		.catch((err) => next(err));
+
 };
 
 
@@ -142,8 +158,9 @@ export const changePassword = async (req, res, next) => {
 
 export const getProfile = (req, res, next) => {
 	const userId = req.user.userId;
+	console.log(req.user);
 	if (!userId) next(new ErrorMessage("Access denied", 401));
-	User.findById(userId).select("-password")
+	User.findById(userId).select("-password").populate("subjectsTaught")
 		.then((user) => {
 			if (!user) return next(new ErrorMessage("User not found", 400));
 			return res.status(200).json({success: true, user});

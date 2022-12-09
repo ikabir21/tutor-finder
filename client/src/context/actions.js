@@ -9,7 +9,9 @@ import {
 	DELETE_PROJECTS,
 	EDIT_PROJECTS,
 	DELETE_COURSE,
-	EDIT_COURSE
+	EDIT_COURSE,
+	UPDATE_PROFILE,
+	ADD_COURSE
 } from "./constants";
 import Swal from "sweetalert2";
 
@@ -92,7 +94,7 @@ const getActions = (dispatch) => {
 		getProfile: async () => {
 			dispatch({ type: LOADING });
 			try {
-				const { data } = await Axios.get("/profile");
+				const { data } = await Axios.get("/user/profile");
 				console.log(data);
 				dispatch({ type: SET_PROFILE, payload: data });
 			} catch (error) {
@@ -104,7 +106,48 @@ const getActions = (dispatch) => {
 							: error.message;
 
 				// alert(msg);
-				window.location.href = "/#/login";
+				// window.location.href = "/auth";
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: msg,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			}
+		},
+		updateProfile: async (user) => {
+			dispatch({ type: LOADING });
+			try {
+				const { data } = await Axios.post("/user/profile", user);
+				console.log(data);
+				dispatch({ type: UPDATE_PROFILE, payload: data });
+				setTimeout(() => {
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Profile updated successfully!",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}, 1800);
+			} catch (error) {
+				const msg =
+					error.response.status === 401
+						? "Access Denied"
+						: error.response && error.response?.data?.message
+							? error.response?.data?.message
+							: error.message;
+
+				// alert(msg);
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: msg,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				// window.location.href = "/auth";
 			}
 		},
 		uploadResults: async (formData) => {
@@ -163,15 +206,15 @@ const getActions = (dispatch) => {
 				});
 			}
 		},
-		addCourse: async (results) => {
+		addCourse: async (course) => {
 			dispatch({ type: LOADING });
 			try {
-				const { data } = await Axios.post("/add-results", results);
-				dispatch({ type: ADD_PROJECTS, payload: results });
+				const { data } = await Axios.post("/add-subject", course);
+				dispatch({ type: ADD_COURSE, payload: course });
 				Swal.fire({
-					position: "top-end",
+					position: "center",
 					icon: "success",
-					title: "Course added succesfully!",
+					title: "Subject added succesfully!",
 					showConfirmButton: false,
 					timer: 1500,
 				});

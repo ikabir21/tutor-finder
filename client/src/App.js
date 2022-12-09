@@ -75,7 +75,7 @@ const App = () => {
 				<Routes>
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/auth' element={<Auth />}></Route>
-					<Route path='/tutor' element={<TutorProfile />}></Route>
+					<Route path='/tutor/:id' element={<TutorProfile />}></Route>
 					<Route path='/search' element={<Search />}></Route>
 					<Route
 						path='/teacher-dashboard'
